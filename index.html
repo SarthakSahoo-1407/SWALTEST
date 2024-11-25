@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Getting Started</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+</head>
+
+<body>
+    <div class="toolbar">
+        <label>
+            Select Language
+            <select id="langSelect">
+                <option value="hi">Hindi</option>
+                <option value="en">English</option>
+                <option value="as">Assamese</option>
+                <option value="bn">Bengali</option>
+                <option value="gu">Gujarati</option>
+                <option value="kn">Kannada</option>
+                <option value="ml">Malayalam</option>
+                <option value="mr">Marathi</option>
+                <option value="or">Odia</option>
+                <option value="pa">Punjabi</option>
+                <option value="ta">Tamil</option>
+                <option value="te">Telugu</option>
+                <option value="ur">Urdu</option>
+            </select>
+        </label>
+        <label>
+            Keyboard
+            <input type="checkbox" id="keyboardCheckbox" />
+        </label>
+    </div>
+
+    <textarea class="swalekh-container" id="swalekh-textarea3"
+        style="width: 96vmax;height: 100px; padding: 7px; font-size: 2rem;" placeholder="Textarea"></textarea>
+    <br><br>
+    <input class="swalekh-container" id="swalekh-textarea3" style="width: 96vmax;height: 100px; padding: 7px;"
+        placeholder="input"></input>
+    <br><br>
+
+
+    <!-- Include the Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+    <br>
+    <br>
+
+    <!-- Initialize Quill editor -->
+    <script>
+        const quill = new Quill("#editor", {
+            theme: "snow",
+        });
+    </script>
+
+    <script src="/swal-main.js"></script>
+    <script>
+        let lang = "hi";
+        let mode = "phonetic";
+        let keyboardEnabled = false;
+
+        const validationKey = "d724589d-dd25-43dc-9821-328eeeeef106";
+
+        const loadSwalekh = async () => {
+            await window.initSwalekh({
+                validationKey,
+                optional: {
+                    theme: "light"
+                }
+            });
+
+            await window.loadSwalekh({
+                identifier: '#swalekh-textarea3',
+                lang: 'hi',
+                mode: 'phonetic',
+
+            })  
+
+        }
+
+        window.addEventListener('load', function () {
+            loadSwalekh();
+            document.querySelector('#langSelect').addEventListener('change', function (e) {
+                window.trigger_lang_change(e.target.value);
+            })
+            document.querySelector('#keyboardCheckbox').addEventListener('change', function (e) {
+                keyboardEnabled = e.target.checked;
+                window.trigger_mode_change(keyboardEnabled ? "keyboard" : "phonetic");
+            })
+
+            applyTheme('light'); // Set default theme
+
+
+        });
+        function applyTheme(theme) {
+            const editorContainer = document.querySelector('#swalekh-container');
+            editorContainer.className = `swalekh-container ${theme}`;
+        }
+
+
+    </script>
+</body>
+
+</html>
