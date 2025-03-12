@@ -57,52 +57,7 @@
         });
     </script>
 
-    <script src="/swal-main.js"></script>
-    <script>
-        let lang = "hi";
-        let mode = "phonetic";
-        let keyboardEnabled = false;
-
-        const validationKey = "590a8e9e-8fb5-4cc1-988f-071221cc10b5";
-
-        const loadSwalekh = async () => {
-            await window.initSwalekh({
-                validationKey,
-                optional: {
-                    theme: "light"
-                }
-            });
-
-            await window.loadSwalekh({
-                identifier: '#swalekh-textarea3',
-                lang: 'hi',
-                mode: 'phonetic',
-
-            })  
-
-        }
-
-        window.addEventListener('load', function () {
-            loadSwalekh();
-            document.querySelector('#langSelect').addEventListener('change', function (e) {
-                window.trigger_lang_change(e.target.value);
-            })
-            document.querySelector('#keyboardCheckbox').addEventListener('change', function (e) {
-                keyboardEnabled = e.target.checked;
-                window.trigger_mode_change(keyboardEnabled ? "keyboard" : "phonetic");
-            })
-
-            applyTheme('light'); // Set default theme
-
-
-        });
-        function applyTheme(theme) {
-            const editorContainer = document.querySelector('#swalekh-container');
-            editorContainer.className = `swalekh-container ${theme}`;
-        }
-
-
-    </script>
+   
 </body>
 
 </html>
